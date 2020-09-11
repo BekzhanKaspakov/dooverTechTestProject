@@ -60,7 +60,7 @@ class _CategoryViewState extends State<CategoryView> {
           ),
         ),
       ),
-      appBar: new MyCustomAppBar(height: 50),
+      appBar: new MyCustomAppBar(height: 65),
     );
   }
 
