@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
+  final Function pageInstanceFunction;
 
   const MyCustomAppBar({
     Key key,
     @required this.height,
+    this.pageInstanceFunction,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,9 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(6),
               ),
               child: TextField(
+                onChanged: (text) {
+                  pageInstanceFunction(text);
+                },
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
                   border: InputBorder.none,

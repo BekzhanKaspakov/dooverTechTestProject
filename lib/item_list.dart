@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ItemListView extends StatefulWidget {
   final Category category;
-  final Future<ItemList> data;
+  final ItemList data;
 
   ItemListView({this.category, this.data});
 
@@ -32,15 +32,7 @@ class _ItemListViewState extends State<ItemListView> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: FutureBuilder(
-        future: widget.data,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData)
-            return createItemListView(snapshot.data, context);
-          else
-            return CircularProgressIndicator();
-        },
-      ),
+      body: createItemListView(widget.data, context),
     );
   }
 
