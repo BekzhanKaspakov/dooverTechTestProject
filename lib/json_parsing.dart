@@ -21,21 +21,7 @@ class HomeView extends StatelessWidget {
           children: [
             CategoryView(),
             ProfileView(),
-            new Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  "Корзина",
-                  style: TextStyle(
-                    color: Color.fromRGBO(18, 28, 66, 1),
-                  ),
-                ),
-                backgroundColor: Colors.white,
-              ),
-              body: Center(
-                child: Text("Under construction ;D"),
-              ),
-            ),
-            // BasketView(),
+            BasketView(),
           ],
         ),
         bottomNavigationBar: SizedBox(

@@ -1,6 +1,14 @@
 import 'package:doover_tech_test_project/models.dart';
 import 'package:flutter/material.dart';
 
+import 'main.dart';
+
+typedef Iterable<T> IterableCallback<T>();
+
+List<T> toList<T>(IterableCallback<T> cb) {
+  return List.unmodifiable(cb());
+}
+
 class ItemListView extends StatefulWidget {
   final Category category;
   final ItemList data;
@@ -12,8 +20,6 @@ class ItemListView extends StatefulWidget {
 }
 
 class _ItemListViewState extends State<ItemListView> {
-  List<Item> basketItems = new List<Item>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +54,7 @@ class _ItemListViewState extends State<ItemListView> {
             margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
             color: Colors.white,
             child: ListTile(
-              leading: Image.network(items[index].image),
-              // leading: Image(image: null,),
+              // leading: Image.network(items[index].image),
               title: Text(
                 items[index].name,
                 style: TextStyle(
@@ -74,38 +79,45 @@ class _ItemListViewState extends State<ItemListView> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      new IconButton(
+                    children: toList(() sync* {
+                      yield new IconButton(
                         padding: new EdgeInsets.all(0.0),
                         icon: Icon(Icons.add_circle_outline),
                         onPressed: () {
-                          // basketItems.add(items[index]);
-                          // items[index].counter++;
+                          items[index].counter++;
+                          if (items[index].counter == 1) {
+                            cart.add(items[index]);
+                          }
+                          setState(() {});
                         },
-                      ),
-                      new Text(items[index].counter.toString()),
-                      new IconButton(
-                        padding: new EdgeInsets.all(0.0),
-                        icon: Icon(Icons.remove_circle_outline),
-                        onPressed: () {
-                          // basketItems.remove(items[index]);
-                          // items[index].counter++;
-                        }
-                      ),
-                      new Spacer(),
-                      new Text(
-                          items[index].unitPrice.substring(
-                                  0, items[index].unitPrice.length - 3) +
-                              " тг",
-                          style: new TextStyle(
-                              color: Color.fromRGBO(18, 28, 66, 1))),
-                    ],
+                      );
+                      if (items[index].counter != 0)
+                        yield new Text(items[index].counter.toString());
+                      if (items[index].counter != 0)
+                        yield new IconButton(
+                            padding: new EdgeInsets.all(0.0),
+                            icon: Icon(Icons.remove_circle_outline),
+                            onPressed: () {
+                              items[index].counter--;
+                              if (items[index].counter == 0) {
+                                cart.remove(items[index]);
+                              }
+                              setState(() {});
+                            });
+                      yield new Spacer();
+                      yield new Text(
+                        items[index].unitPrice.substring(
+                                0, items[index].unitPrice.length - 3) +
+                            " тг",
+                        style:
+                            new TextStyle(color: Color.fromRGBO(18, 28, 66, 1)),
+                      );
+                    }),
                   ),
                 ],
               ),
             ),
           );
-
         });
   }
 }

@@ -4,8 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'login_page.dart';
 import 'dart:convert' show json, base64, ascii;
 
+import 'models.dart';
+
 const SERVER = 'https://api.doover.tech';
 final storage = FlutterSecureStorage();
+var cart = new List<Item>();
 
 void main() => runApp(MyApp());
 

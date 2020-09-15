@@ -36,12 +36,8 @@ class Network {
   Future<Map<String, dynamic>> loadUsername() async {
     var jwt = await storage.read(key: "jwt");
     String token = "Token " + json.decode(jwt)['key'];
-    print(token);
-    // var jwt = "Token 6e44aeb35544c9dc28f2594cba8d1ea12d861033";
     Response response = await get(Uri.encodeFull(url), headers: {"Authorization": token});
-    // print(response.statusCode);
     if (response.statusCode == 200) {
-      // print(response.body);
       return json.decode(response.body);
     } else {
       print(utf8.decode(response.bodyBytes));
